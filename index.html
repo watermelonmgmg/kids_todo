@@ -267,11 +267,19 @@ const TIMES = ['morning','kitaku','night'];
 let tasks, nextId, kidNames, activeKid;
 let pickerCallback = null;
 
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+}
 function load() {
   try {
     tasks     = JSON.parse(localStorage.getItem('kids4_tasks') || 'null') || DEFAULT_TASKS.map(t=>({...t,done:[...t.done]}));
     kidNames  = JSON.parse(localStorage.getItem('kids4_names') || 'null') || [...DEFAULT_NAMES];
     activeKid = parseInt(localStorage.getItem('kids4_active') ?? '-1');
+    const lastDate = localStorage.getItem('kids4_date') || '';
+    if (lastDate !== todayStr()) {
+      tasks.forEach(t => t.done = [false, false]);
+    }
   } catch(e) {
     tasks = DEFAULT_TASKS.map(t=>({...t,done:[...t.done]}));
     kidNames = [...DEFAULT_NAMES];
@@ -284,6 +292,7 @@ function save() {
     localStorage.setItem('kids4_tasks',  JSON.stringify(tasks));
     localStorage.setItem('kids4_names',  JSON.stringify(kidNames));
     localStorage.setItem('kids4_active', String(activeKid));
+    localStorage.setItem('kids4_date',   todayStr());
   } catch(e) {}
 }
 
@@ -403,6 +412,7 @@ document.getElementById('add-icon-btn').addEventListener('click',()=>{
 
 document.getElementById('date-bar').textContent = getDate();
 load();
+save();
 document.getElementById('tab-name-0').textContent = kidNames[0];
 document.getElementById('tab-name-1').textContent = kidNames[1];
 updateTabs();
