@@ -13,76 +13,78 @@
     min-height: 100vh;
     padding: 20px 16px 40px;
   }
-  .app { max-width: 640px; margin: 0 auto; }
+  .app { max-width: 680px; margin: 0 auto; }
 
   .header { text-align: center; margin-bottom: 14px; }
-  .header h1 {
-    font-family: 'Yomogi', cursive;
-    font-size: 26px; color: #3D2B1F; margin-bottom: 4px;
-  }
+  .header h1 { font-family: 'Yomogi', cursive; font-size: 26px; color: #3D2B1F; margin-bottom: 4px; }
   .date-bar { font-size: 14px; color: #8A7060; }
 
+  /* Kid tabs */
   .kid-tabs { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
   .kid-tab {
     padding: 7px 22px; border-radius: 20px; font-size: 14px; font-weight: 700;
     border: 2px solid transparent; cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
-    transition: all 0.15s;
+    font-family: 'Noto Sans JP', sans-serif; transition: all 0.15s;
   }
-  .kid-tab.kid0 { background: #FFE0EF; color: #A03060; border-color: #F5A0C0; }
-  .kid-tab.kid1 { background: #DCF0FF; color: #1A5A8A; border-color: #90C8F0; }
-  .kid-tab.kidall { background: #F0F0F0; color: #888; border-color: #DDD; }
-  .kid-tab.active { transform: scale(1.06); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .kid-tab.kid0   { background: #FFE0EF; color: #A03060; border-color: #F5A0C0; }
+  .kid-tab.kid1   { background: #DCF0FF; color: #1A5A8A; border-color: #90C8F0; }
+  .kid-tab.kidall { background: #F0F0F0; color: #888;    border-color: #DDD; }
+  .kid-tab.active   { transform: scale(1.06); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
   .kid-tab.inactive { opacity: 0.5; }
 
-  .progress { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
-  .prog-pill { font-size: 13px; font-weight: 500; padding: 5px 14px; border-radius: 20px; }
+  /* Progress pills */
+  .progress { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px; }
+  .prog-pill { font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px; }
   .prog-pill.morning { background: #FFF0B0; color: #7A5800; border: 1.5px solid #F0CC40; }
+  .prog-pill.kitaku  { background: #E8F5E8; color: #2A6A2A; border: 1.5px solid #90D090; }
   .prog-pill.night   { background: #D8E4FF; color: #2B3E8A; border: 1.5px solid #9EB2F5; }
 
-  .sections { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  /* 3-column grid for sections */
+  .sections { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
   .section {
     background: #fff; border-radius: 18px;
     border: 2px solid #EDD9C8; overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
   .section-header {
-    padding: 10px 14px; font-size: 15px; font-weight: 700;
-    display: flex; align-items: center; gap: 6px;
+    padding: 9px 12px; font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; gap: 5px;
   }
   .morning-header { background: #FFF3C0; color: #7A5800; }
+  .kitaku-header  { background: #D8F0D8; color: #2A6A2A; }
   .night-header   { background: #D8E4FF; color: #2B3E8A; }
 
+  /* Task rows */
   .task-item {
-    display: flex; align-items: center; gap: 8px;
-    padding: 9px 12px;
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 11px;
     border-top: 1.5px solid #F5EBE0;
     -webkit-tap-highlight-color: transparent;
   }
-  .task-icon { font-size: 22px; min-width: 28px; text-align: center; }
-  .task-label { font-size: 13px; font-weight: 500; color: #3D2B1F; flex: 1; line-height: 1.3; }
+  .task-icon  { font-size: 20px; min-width: 26px; text-align: center; }
+  .task-label { font-size: 12px; font-weight: 500; color: #3D2B1F; flex: 1; line-height: 1.3; }
   .task-label.all-done { color: #BBA898; text-decoration: line-through; }
 
-  .checks { display: flex; gap: 6px; align-items: center; }
+  .checks { display: flex; gap: 5px; align-items: center; }
   .check-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .check-name { font-size: 9px; font-weight: 700; color: #A08070; line-height: 1; }
-
+  .check-name { font-size: 8px; font-weight: 700; color: #A08070; line-height: 1; }
   .check-circle {
-    width: 28px; height: 28px; border-radius: 50%;
+    width: 26px; height: 26px; border-radius: 50%;
     border: 2.5px solid #D4C0B0;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
-    font-size: 15px; color: white;
+    font-size: 13px; color: white;
     -webkit-tap-highlight-color: transparent;
   }
   .check-circle:active { transform: scale(0.9); }
   .check-circle.done0 { background: #F06090; border-color: #F06090; transform: scale(1.12); }
   .check-circle.done1 { background: #4090D0; border-color: #4090D0; transform: scale(1.12); }
-  .checkmark { display: none; font-size: 13px; font-weight: 700; }
+  .checkmark { display: none; font-size: 12px; font-weight: 700; }
   .check-circle.done0 .checkmark,
   .check-circle.done1 .checkmark { display: block; }
 
+  /* Edit panel */
   .edit-section {
     background: #fff; border-radius: 18px;
     border: 2px solid #EDD9C8; padding: 16px;
@@ -106,8 +108,7 @@
   .kid-name-wrap input {
     font-size: 13px; padding: 6px 10px;
     border: 1.5px solid #EDD9C8; border-radius: 10px;
-    font-family: 'Noto Sans JP', sans-serif;
-    background: #FFF9F0; color: #3D2B1F;
+    font-family: 'Noto Sans JP', sans-serif; background: #FFF9F0; color: #3D2B1F;
   }
 
   .task-list-edit { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
@@ -123,7 +124,7 @@
     font-family: 'Noto Sans JP', sans-serif; background: #FFF9F0; color: #3D2B1F;
   }
   .task-list-edit select, .add-row select {
-    font-size: 12px; padding: 6px 8px;
+    font-size: 12px; padding: 6px 6px;
     border: 1.5px solid #EDD9C8; border-radius: 10px;
     background: #FFF9F0; color: #3D2B1F; font-family: 'Noto Sans JP', sans-serif;
   }
@@ -141,6 +142,7 @@
     border-radius: 12px; cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
   }
 
+  /* Icon picker */
   .icon-picker-popup {
     position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%);
     background: #fff; border: 2px solid #EDD9C8; border-radius: 16px;
@@ -155,10 +157,15 @@
   .picker-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 99; display: none; }
   .picker-overlay.open { display: block; }
 
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
+    .sections { grid-template-columns: 1fr; gap: 10px; }
+    .task-icon { font-size: 20px; }
+    .task-label { font-size: 12px; }
+  }
+  @media (min-width: 481px) and (max-width: 600px) {
     .task-icon { font-size: 18px; min-width: 22px; }
     .task-label { font-size: 11px; }
-    .check-circle { width: 24px; height: 24px; font-size: 12px; }
+    .check-circle { width: 22px; height: 22px; font-size: 11px; }
   }
 </style>
 </head>
@@ -177,6 +184,7 @@
 
   <div class="progress">
     <div class="prog-pill morning" id="prog-morning">☀️ あさ: 0 / 0</div>
+    <div class="prog-pill kitaku"  id="prog-kitaku">🏠 きたく: 0 / 0</div>
     <div class="prog-pill night"   id="prog-night">🌙 よる: 0 / 0</div>
   </div>
 
@@ -184,6 +192,10 @@
     <div class="section">
       <div class="section-header morning-header">☀️ あさ</div>
       <div id="morning-tasks"></div>
+    </div>
+    <div class="section">
+      <div class="section-header kitaku-header">🏠 きたく</div>
+      <div id="kitaku-tasks"></div>
     </div>
     <div class="section">
       <div class="section-header night-header">🌙 よる</div>
@@ -212,6 +224,7 @@
         <input type="text" id="new-task-name" placeholder="タスク名を入力" />
         <select id="new-task-time">
           <option value="morning">あさ</option>
+          <option value="kitaku">きたく</option>
           <option value="night">よる</option>
         </select>
         <button class="add-btn" onclick="addTask()">追加</button>
@@ -231,29 +244,34 @@
 </div>
 
 <script>
-const ICONS = ['🚽','🦷','🛁','👕','🍽️','👜','📚','💊','😴','🐾','🧼','🧹','👟','🎒','🌸','🥛','🍎','🎮','📺','💤','🚿','🧴','🧃','🍞','🥗','🎵','📝','🌈','⭐','🐶'];
+const ICONS = ['🚽','🦷','🛁','👕','🍽️','👜','📚','💊','😴','🐾','🧼','🧹','👟','🎒','🌸','🥛','🍎','🎮','📺','💤','🚿','🧴','🧃','🍞','🥗','🎵','📝','🌈','⭐','🐶','✏️','📖','🎽','🎒','🏠','⏰'];
+
 const DEFAULT_TASKS = [
-  { id:1,  icon:'🚽', label:'トイレ',    time:'morning', done:[false,false] },
-  { id:2,  icon:'🦷', label:'はみがき',  time:'morning', done:[false,false] },
-  { id:3,  icon:'🍽️', label:'ごはん',    time:'morning', done:[false,false] },
-  { id:4,  icon:'👕', label:'おきがえ',  time:'morning', done:[false,false] },
-  { id:5,  icon:'👜', label:'ランドセル',time:'morning', done:[false,false] },
-  { id:6,  icon:'🛁', label:'おふろ',    time:'night',   done:[false,false] },
-  { id:7,  icon:'🦷', label:'はみがき',  time:'night',   done:[false,false] },
-  { id:8,  icon:'👕', label:'パジャマ',  time:'night',   done:[false,false] },
-  { id:9,  icon:'🍽️', label:'ごはん',    time:'night',   done:[false,false] },
-  { id:10, icon:'😴', label:'ねる',      time:'night',   done:[false,false] },
+  { id:1,  icon:'🚽', label:'トイレ',      time:'morning', done:[false,false] },
+  { id:2,  icon:'🦷', label:'はみがき',    time:'morning', done:[false,false] },
+  { id:3,  icon:'🍽️', label:'ごはん',      time:'morning', done:[false,false] },
+  { id:4,  icon:'👕', label:'おきがえ',    time:'morning', done:[false,false] },
+  { id:5,  icon:'🎒', label:'ランドセル',  time:'morning', done:[false,false] },
+  { id:6,  icon:'📖', label:'しゅくだい',  time:'kitaku',  done:[false,false] },
+  { id:7,  icon:'📝', label:'あしたのしたく',time:'kitaku',done:[false,false] },
+  { id:8,  icon:'👕', label:'おきがえ',    time:'kitaku',  done:[false,false] },
+  { id:9,  icon:'🛁', label:'おふろ',      time:'night',   done:[false,false] },
+  { id:10, icon:'🦷', label:'はみがき',    time:'night',   done:[false,false] },
+  { id:11, icon:'👕', label:'パジャマ',    time:'night',   done:[false,false] },
+  { id:12, icon:'🍽️', label:'ごはん',      time:'night',   done:[false,false] },
+  { id:13, icon:'😴', label:'ねる',        time:'night',   done:[false,false] },
 ];
 const DEFAULT_NAMES = ['長男','次男'];
+const TIMES = ['morning','kitaku','night'];
 
 let tasks, nextId, kidNames, activeKid;
 let pickerCallback = null;
 
 function load() {
   try {
-    tasks    = JSON.parse(localStorage.getItem('kids3_tasks') || 'null') || DEFAULT_TASKS.map(t=>({...t,done:[...t.done]}));
-    kidNames = JSON.parse(localStorage.getItem('kids3_names') || 'null') || [...DEFAULT_NAMES];
-    activeKid = parseInt(localStorage.getItem('kids3_active') ?? '-1');
+    tasks     = JSON.parse(localStorage.getItem('kids4_tasks') || 'null') || DEFAULT_TASKS.map(t=>({...t,done:[...t.done]}));
+    kidNames  = JSON.parse(localStorage.getItem('kids4_names') || 'null') || [...DEFAULT_NAMES];
+    activeKid = parseInt(localStorage.getItem('kids4_active') ?? '-1');
   } catch(e) {
     tasks = DEFAULT_TASKS.map(t=>({...t,done:[...t.done]}));
     kidNames = [...DEFAULT_NAMES];
@@ -263,9 +281,9 @@ function load() {
 }
 function save() {
   try {
-    localStorage.setItem('kids3_tasks', JSON.stringify(tasks));
-    localStorage.setItem('kids3_names', JSON.stringify(kidNames));
-    localStorage.setItem('kids3_active', String(activeKid));
+    localStorage.setItem('kids4_tasks',  JSON.stringify(tasks));
+    localStorage.setItem('kids4_names',  JSON.stringify(kidNames));
+    localStorage.setItem('kids4_active', String(activeKid));
   } catch(e) {}
 }
 
@@ -274,39 +292,34 @@ function getDate() {
   const days=['にちようび','げつようび','かようび','すいようび','もくようび','きんようび','どようび'];
   return `${d.getMonth()+1}がつ ${d.getDate()}にち（${days[d.getDay()]}）`;
 }
-
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function setActiveKid(k) {
-  activeKid = k;
-  save();
-  updateTabs();
-  renderTasks();
+  activeKid = k; save(); updateTabs(); renderTasks();
 }
-
 function updateTabs() {
   [0,1].forEach(i => {
-    const t = document.getElementById('tab'+i);
-    t.className = 'kid-tab kid'+i + (activeKid===i?' active':' inactive');
+    document.getElementById('tab'+i).className = 'kid-tab kid'+i+(activeKid===i?' active':' inactive');
   });
-  const ta = document.getElementById('tab-all');
-  ta.className = 'kid-tab kidall' + (activeKid===-1?' active':' inactive');
+  document.getElementById('tab-all').className = 'kid-tab kidall'+(activeKid===-1?' active':' inactive');
 }
 
 function renderTasks() {
-  ['morning','night'].forEach(time => {
+  const showBoth = (activeKid === -1);
+  const kids = showBoth ? [0,1] : [activeKid];
+  const labels = { morning:'☀️ あさ', kitaku:'🏠 きたく', night:'🌙 よる' };
+
+  TIMES.forEach(time => {
     const el = document.getElementById(time+'-tasks');
     const list = tasks.filter(t=>t.time===time);
-    const showBoth = (activeKid === -1);
-    const kids = showBoth ? [0,1] : [activeKid];
 
     el.innerHTML = list.map(t => {
       const allDone = kids.every(ki=>t.done[ki]);
-      const checks = kids.map(ki => `
+      const checks = kids.map(ki=>`
         <div class="check-wrap">
-          ${showBoth ? `<span class="check-name">${esc(kidNames[ki])}</span>` : ''}
+          ${showBoth?`<span class="check-name">${esc(kidNames[ki])}</span>`:''}
           <div class="check-circle${t.done[ki]?' done'+ki:''}" onclick="toggle(${t.id},${ki})">
             <span class="checkmark">✓</span>
           </div>
@@ -320,51 +333,44 @@ function renderTasks() {
 
     let done=0, total=list.length*kids.length;
     kids.forEach(ki=>{ done+=list.filter(t=>t.done[ki]).length; });
-    const pill = document.getElementById('prog-'+time);
-    pill.textContent = (time==='morning'?'☀️ あさ':'🌙 よる')+`: ${done} / ${total}`;
+    document.getElementById('prog-'+time).textContent = labels[time]+`: ${done} / ${total}`;
   });
 }
 
 function renderEditList() {
+  const timeLabel = { morning:'あさ', kitaku:'きたく', night:'よる' };
   document.getElementById('edit-list').innerHTML = tasks.map(t=>`
     <li>
       <span class="icon-pick" onclick="openPicker(function(ic){changeIcon(${t.id},ic)})">${t.icon}</span>
       <input type="text" value="${esc(t.label)}" onchange="renameTask(${t.id},this.value)" />
       <select onchange="changeTime(${t.id},this.value)">
-        <option value="morning"${t.time==='morning'?' selected':''}>あさ</option>
-        <option value="night"${t.time==='night'?' selected':''}>よる</option>
+        ${TIMES.map(v=>`<option value="${v}"${t.time===v?' selected':''}>${timeLabel[v]}</option>`).join('')}
       </select>
       <button class="del-btn" onclick="deleteTask(${t.id})">✕</button>
     </li>`).join('');
   [0,1].forEach(i=>{ document.getElementById('kid-name-'+i).value = kidNames[i]; });
   updateResetBtns();
 }
-
 function updateResetBtns() {
   [0,1].forEach(i=>{
     document.getElementById('reset-btn-'+i).textContent = `🔄 ${kidNames[i]}リセット`;
   });
 }
-
 function updateKidName(i, val) {
-  kidNames[i] = val || DEFAULT_NAMES[i];
-  save();
+  kidNames[i] = val || DEFAULT_NAMES[i]; save();
   document.getElementById('tab-name-'+i).textContent = kidNames[i];
-  updateResetBtns();
-  renderTasks();
+  updateResetBtns(); renderTasks();
 }
 
 function toggle(id, ki) {
-  const t = tasks.find(t=>t.id===id);
-  if(t){ t.done[ki]=!t.done[ki]; save(); renderTasks(); }
+  const t=tasks.find(t=>t.id===id); if(t){t.done[ki]=!t.done[ki];save();renderTasks();}
 }
 function renameTask(id,val){ const t=tasks.find(t=>t.id===id); if(t){t.label=val;save();renderTasks();} }
 function changeTime(id,val){ const t=tasks.find(t=>t.id===id); if(t){t.time=val;save();renderTasks();renderEditList();} }
 function changeIcon(id,icon){ const t=tasks.find(t=>t.id===id); if(t){t.icon=icon;save();renderTasks();renderEditList();} }
 function deleteTask(id){ tasks=tasks.filter(t=>t.id!==id); save();renderTasks();renderEditList(); }
 function addTask(){
-  const name=document.getElementById('new-task-name').value.trim();
-  if(!name)return;
+  const name=document.getElementById('new-task-name').value.trim(); if(!name)return;
   const time=document.getElementById('new-task-time').value;
   const icon=document.getElementById('add-icon-btn').textContent;
   tasks.push({id:nextId++,icon,label:name,time,done:[false,false]});
@@ -373,12 +379,10 @@ function addTask(){
 }
 function resetKid(ki){
   if(!confirm(`${kidNames[ki]}のチェックをリセットしますか？`))return;
-  tasks.forEach(t=>t.done[ki]=false);
-  save();renderTasks();
+  tasks.forEach(t=>t.done[ki]=false); save();renderTasks();
 }
 function toggleEdit(){
-  document.getElementById('edit-body').classList.toggle('open');
-  renderEditList();
+  document.getElementById('edit-body').classList.toggle('open'); renderEditList();
 }
 
 function openPicker(cb){
