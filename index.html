@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>きょうのおしごと</title>
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #FFF9F0;
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+  }
+  .app { max-width: 580px; margin: 0 auto; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 18px; }
+  .header h1 {
+    font-family: 'Yomogi', cursive;
+    font-size: 28px;
+    color: #3D2B1F;
+    margin-bottom: 4px;
+  }
+  .date-bar { font-size: 14px; color: #8A7060; }
+
+  /* Progress pills */
+  .progress { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
+  .prog-pill {
+    font-size: 13px; font-weight: 500;
+    padding: 5px 14px; border-radius: 20px;
+  }
+  .prog-pill.morning { background: #FFF0B0; color: #7A5800; border: 1.5px solid #F0CC40; }
+  .prog-pill.night   { background: #D8E4FF; color: #2B3E8A; border: 1.5px solid #9EB2F5; }
+
+  /* Two-column grid */
+  .sections { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .section {
+    background: #fff;
+    border-radius: 18px;
+    border: 2px solid #EDD9C8;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    padding: 10px 14px;
+    font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .morning-header { background: #FFF3C0; color: #7A5800; }
+  .night-header   { background: #D8E4FF; color: #2B3E8A; }
+
+  /* Task rows */
+  .task-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px;
+    border-top: 1.5px solid #F5EBE0;
+    cursor: pointer;
+    transition: background 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .task-item:active { background: #FFF5EC; }
+  .task-icon { font-size: 24px; min-width: 30px; text-align: center; }
+  .task-label { font-size: 13px; font-weight: 500; color: #3D2B1F; flex: 1; line-height: 1.3; }
+  .task-item.done .task-label { color: #BBA898; text-decoration: line-through; }
+
+  .check-circle {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 2.5px solid #D4C0B0;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
+    font-size: 17px; color: white;
+  }
+  .task-item.done .check-circle {
+    background: #5DB87A;
+    border-color: #5DB87A;
+    transform: scale(1.15);
+  }
+  .checkmark { display: none; }
+  .task-item.done .checkmark { display: block; }
+
+  /* Edit panel */
+  .edit-section {
+    background: #fff;
+    border-radius: 18px;
+    border: 2px solid #EDD9C8;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .edit-toggle {
+    width: 100%; background: #FFF3C0; border: 1.5px solid #F0CC40;
+    border-radius: 12px; padding: 9px; font-size: 14px; font-weight: 700;
+    color: #7A5800; cursor: pointer; margin-bottom: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .edit-body { display: none; }
+  .edit-body.open { display: block; }
+  .edit-title { font-size: 13px; font-weight: 700; color: #8A7060; margin-bottom: 8px; }
+  .task-list-edit { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .task-list-edit li { display: flex; align-items: center; gap: 6px; }
+  .icon-pick {
+    font-size: 20px; cursor: pointer;
+    min-width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid #EDD9C8; border-radius: 10px;
+    background: #FFF9F0;
+  }
+  .task-list-edit input[type=text] {
+    flex: 1; font-size: 13px; padding: 6px 10px;
+    border: 1.5px solid #EDD9C8; border-radius: 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #FFF9F0; color: #3D2B1F;
+  }
+  .task-list-edit select, .add-row select {
+    font-size: 12px; padding: 6px 8px;
+    border: 1.5px solid #EDD9C8; border-radius: 10px;
+    background: #FFF9F0; color: #3D2B1F;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .del-btn {
+    background: none; border: none;
+    color: #BBA898; font-size: 18px; cursor: pointer; padding: 0 4px;
+    line-height: 1;
+  }
+  .add-row { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; }
+  .add-row input[type=text] {
+    flex: 1; font-size: 13px; padding: 6px 10px;
+    border: 1.5px solid #EDD9C8; border-radius: 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #FFF9F0; color: #3D2B1F;
+  }
+  .add-btn {
+    padding: 6px 14px; font-size: 13px; font-weight: 700;
+    background: #5DB87A; color: #fff; border: none; border-radius: 10px;
+    cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
+  }
+  .reset-btn {
+    width: 100%; padding: 9px; font-size: 13px; font-weight: 700;
+    background: #FFF0F0; color: #C0604A; border: 1.5px solid #F5C0B0;
+    border-radius: 12px; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  /* Icon picker popup */
+  .icon-picker-popup {
+    position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    background: #fff; border: 2px solid #EDD9C8; border-radius: 16px;
+    padding: 14px; z-index: 100; display: none;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    max-width: 260px; width: 90%;
+  }
+  .icon-picker-popup.open { display: block; }
+  .icon-picker-popup .picker-title {
+    font-size: 13px; font-weight: 700; color: #8A7060;
+    margin-bottom: 10px; text-align: center;
+  }
+  .icon-grid { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .icon-opt {
+    font-size: 24px; padding: 6px; border-radius: 10px;
+    cursor: pointer; transition: background 0.1s;
+  }
+  .icon-opt:hover, .icon-opt:active { background: #FFF3C0; }
+  .picker-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.2);
+    z-index: 99; display: none;
+  }
+  .picker-overlay.open { display: block; }
+
+  @media (max-width: 400px) {
+    .sections { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .task-icon { font-size: 20px; }
+    .task-label { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>きょうのおしごと ✨</h1>
+    <div class="date-bar" id="date-bar"></div>
+  </div>
+  <div class="progress">
+    <div class="prog-pill morning" id="prog-morning">☀️ あさ: 0 / 0</div>
+    <div class="prog-pill night"   id="prog-night">🌙 よる: 0 / 0</div>
+  </div>
+  <div class="sections">
+    <div class="section">
+      <div class="section-header morning-header">☀️ あさ</div>
+      <div id="morning-tasks"></div>
+    </div>
+    <div class="section">
+      <div class="section-header night-header">🌙 よる</div>
+      <div id="night-tasks"></div>
+    </div>
+  </div>
+
+  <div class="edit-section">
+    <button class="edit-toggle" onclick="toggleEdit()">⚙️ タスクを編集する ▾</button>
+    <div class="edit-body" id="edit-body">
+      <div class="edit-title">タスク一覧</div>
+      <ul class="task-list-edit" id="edit-list"></ul>
+      <div class="add-row">
+        <span class="icon-pick" id="add-icon-btn">⭐</span>
+        <input type="text" id="new-task-name" placeholder="タスク名を入力" />
+        <select id="new-task-time">
+          <option value="morning">あさ</option>
+          <option value="night">よる</option>
+        </select>
+        <button class="add-btn" onclick="addTask()">追加</button>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">🔄 チェックをリセット</button>
+    </div>
+  </div>
+</div>
+
+<!-- Icon picker -->
+<div class="picker-overlay" id="picker-overlay" onclick="closePicker()"></div>
+<div class="icon-picker-popup" id="icon-picker-popup">
+  <div class="picker-title">アイコンをえらんでね</div>
+  <div class="icon-grid" id="icon-grid"></div>
+</div>
+
+<script>
+const ICONS = ['🚽','🦷','🛁','👕','🍽️','👜','📚','💊','😴','🐾','🧼','🧹','👟','🎒','🌸','🥛','🍎','🎮','📺','💤','🚿','🧴','🧃','🍞','🥗','🎵','📝','🌈','⭐','🐶'];
+
+const DEFAULT_TASKS = [
+  { id:1, icon:'🚽', label:'トイレ',   time:'morning', done:false },
+  { id:2, icon:'🦷', label:'はみがき', time:'morning', done:false },
+  { id:3, icon:'🍽️', label:'ごはん',   time:'morning', done:false },
+  { id:4, icon:'👕', label:'おきがえ', time:'morning', done:false },
+  { id:5, icon:'👜', label:'ランドセル',time:'morning', done:false },
+  { id:6, icon:'🛁', label:'おふろ',   time:'night',   done:false },
+  { id:7, icon:'🦷', label:'はみがき', time:'night',   done:false },
+  { id:8, icon:'👕', label:'パジャマ', time:'night',   done:false },
+  { id:9, icon:'🍽️', label:'ごはん',   time:'night',   done:false },
+  { id:10,icon:'😴', label:'ねる',     time:'night',   done:false },
+];
+
+let tasks, nextId;
+let pickerCallback = null;
+
+function load() {
+  try {
+    const saved = localStorage.getItem('kidsTasks2');
+    tasks = saved ? JSON.parse(saved) : DEFAULT_TASKS.map(t => ({...t}));
+  } catch(e) {
+    tasks = DEFAULT_TASKS.map(t => ({...t}));
+  }
+  nextId = tasks.reduce((m, t) => Math.max(m, t.id), 0) + 1;
+}
+function save() {
+  try { localStorage.setItem('kidsTasks2', JSON.stringify(tasks)); } catch(e) {}
+}
+
+function getDate() {
+  const d = new Date();
+  const days = ['にちようび','げつようび','かようび','すいようび','もくようび','きんようび','どようび'];
+  return `${d.getMonth()+1}がつ ${d.getDate()}にち（${days[d.getDay()]}）`;
+}
+
+function renderTasks() {
+  ['morning','night'].forEach(time => {
+    const el = document.getElementById(time+'-tasks');
+    const list = tasks.filter(t => t.time === time);
+    el.innerHTML = list.map(t => `
+      <div class="task-item${t.done?' done':''}" onclick="toggle(${t.id})">
+        <span class="task-icon">${t.icon}</span>
+        <span class="task-label">${t.label}</span>
+        <div class="check-circle"><span class="checkmark">✓</span></div>
+      </div>
+    `).join('');
+    const done = list.filter(t => t.done).length;
+    const pill = document.getElementById('prog-'+time);
+    const emoji = time === 'morning' ? '☀️' : '🌙';
+    const word  = time === 'morning' ? 'あさ' : 'よる';
+    pill.textContent = `${emoji} ${word}: ${done} / ${list.length}`;
+  });
+}
+
+function renderEditList() {
+  const el = document.getElementById('edit-list');
+  el.innerHTML = tasks.map(t => `
+    <li>
+      <span class="icon-pick" onclick="openPicker(function(ic){ changeIcon(${t.id},ic); })">${t.icon}</span>
+      <input type="text" value="${escHtml(t.label)}" onchange="renameTask(${t.id},this.value)" />
+      <select onchange="changeTime(${t.id},this.value)">
+        <option value="morning"${t.time==='morning'?' selected':''}>あさ</option>
+        <option value="night"${t.time==='night'?' selected':''}>よる</option>
+      </select>
+      <button class="del-btn" onclick="deleteTask(${t.id})">✕</button>
+    </li>
+  `).join('');
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function toggle(id) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.done = !t.done; save(); renderTasks(); }
+}
+function renameTask(id, val) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.label = val; save(); renderTasks(); }
+}
+function changeTime(id, val) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.time = val; save(); renderTasks(); renderEditList(); }
+}
+function changeIcon(id, icon) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.icon = icon; save(); renderTasks(); renderEditList(); }
+}
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  save(); renderTasks(); renderEditList();
+}
+function addTask() {
+  const name = document.getElementById('new-task-name').value.trim();
+  if (!name) return;
+  const time = document.getElementById('new-task-time').value;
+  const icon = document.getElementById('add-icon-btn').textContent;
+  tasks.push({ id: nextId++, icon, label: name, time, done: false });
+  document.getElementById('new-task-name').value = '';
+  save(); renderTasks(); renderEditList();
+}
+function resetAll() {
+  if (!confirm('チェックをすべてリセットしますか？')) return;
+  tasks.forEach(t => t.done = false);
+  save(); renderTasks();
+}
+function toggleEdit() {
+  const body = document.getElementById('edit-body');
+  body.classList.toggle('open');
+  renderEditList();
+}
+
+// Icon picker
+function openPicker(cb) {
+  pickerCallback = cb;
+  const grid = document.getElementById('icon-grid');
+  grid.innerHTML = ICONS.map(ic => `<span class="icon-opt" onclick="selectIcon('${ic}')">${ic}</span>`).join('');
+  document.getElementById('icon-picker-popup').classList.add('open');
+  document.getElementById('picker-overlay').classList.add('open');
+}
+function selectIcon(icon) {
+  if (pickerCallback) pickerCallback(icon);
+  closePicker();
+}
+function closePicker() {
+  document.getElementById('icon-picker-popup').classList.remove('open');
+  document.getElementById('picker-overlay').classList.remove('open');
+  pickerCallback = null;
+}
+
+// Add task icon button
+document.getElementById('add-icon-btn').addEventListener('click', function() {
+  openPicker(function(ic) {
+    document.getElementById('add-icon-btn').textContent = ic;
+  });
+});
+
+document.getElementById('date-bar').textContent = getDate();
+load();
+renderTasks();
+</script>
+</body>
+</html>
